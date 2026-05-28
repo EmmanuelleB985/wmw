@@ -1,0 +1,185 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "WMW Trace",
+  "description": "A typed state-transition trace for VLM physical reasoning evaluation.",
+  "type": "object",
+  "required": ["id", "scenario_family", "state_0", "transition", "state_1", "answer", "metadata"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique trace identifier, e.g. 'incline_001_pos'"
+    },
+    "scenario_family": {
+      "type": "string",
+      "enum": [
+        "inclined_plane", "projectile", "collision", "pulley",
+        "spring", "circuit", "fluid", "thermal",
+        "free_fall", "friction", "circular_motion", "wave",
+        "lever", "buoyancy", "optics", "pendulum",
+        "em_induction"
+      ]
+    },
+    "question": {
+      "type": "string",
+      "description": "The physics question posed to the VLM."
+    },
+    "state_0": {
+      "type": "object",
+      "required": ["objects", "relations", "forces", "variables"],
+      "properties": {
+        "objects": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "attributes"],
+            "properties": {
+              "name": { "type": "string" },
+              "attributes": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            }
+          }
+        },
+        "relations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["type", "args"],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "on", "in", "attached", "adjacent", "above", "below",
+                  "left_of", "right_of", "contact", "supported_by",
+                  "connected", "separated", "aligned", "perpendicular"
+                ]
+              },
+              "args": {
+                "type": "array",
+                "items": { "type": "string" },
+                "minItems": 2,
+                "maxItems": 2
+              }
+            }
+          }
+        },
+        "forces": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "target", "direction"],
+            "properties": {
+              "name": { "type": "string" },
+              "target": { "type": "string" },
+              "direction": { "type": "string" },
+              "magnitude": { "type": ["number", "string", "null"] },
+              "unit": { "type": "string" }
+            }
+          }
+        },
+        "variables": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Named physical variables: velocity, angle, mass, etc."
+        },
+        "assumptions": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Explicit assumptions: frictionless, ideal gas, massless rope, etc."
+        }
+      }
+    },
+    "transition": {
+      "type": "object",
+      "required": ["rule", "effect"],
+      "properties": {
+        "rule": {
+          "type": "string",
+          "description": "The physical law or principle applied."
+        },
+        "effect": {
+          "type": "string",
+          "description": "Qualitative or symbolic description of the predicted change."
+        },
+        "equation": {
+          "type": ["string", "null"],
+          "description": "Optional symbolic equation, e.g. 'a = g sin(theta)'"
+        },
+        "evidence": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "State facts or rules supporting the transition."
+        }
+      }
+    },
+    "state_1": {
+      "type": "object",
+      "required": ["predicted_change"],
+      "properties": {
+        "predicted_change": {
+          "type": "string",
+          "description": "What changes from s0 as a result of the transition."
+        },
+        "new_variables": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "answer": {
+      "type": "object",
+      "required": ["value"],
+      "properties": {
+        "value": {
+          "type": ["string", "number"],
+          "description": "The final answer: letter, number, or expression."
+        },
+        "unit": { "type": ["string", "null"] },
+        "explanation": { "type": ["string", "null"] }
+      }
+    },
+    "derivation": {
+      "type": ["string", "null"],
+      "description": "Short reasoning chain linking state, transition, and answer."
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "difficulty": { "type": "string", "enum": ["easy", "medium", "hard"] },
+        "task_type": {
+          "type": "string",
+          "enum": ["static_state", "transition_prediction", "counterfactual", "answer_qa"]
+        },
+        "gold_answer": {},
+        "gold_state_hash": { "type": ["string", "null"] },
+        "source": { "type": "string" }
+      }
+    },
+    "verifier": {
+      "type": ["object", "null"],
+      "properties": {
+        "schema_ok": { "type": "boolean" },
+        "state_ok": { "type": ["boolean", "null"] },
+        "transition_ok": { "type": ["boolean", "null"] },
+        "answer_trace_ok": { "type": ["boolean", "null"] },
+        "labels": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "object", "state", "relation", "force",
+              "transition", "intervention", "temporal",
+              "unit_scale", "faithfulness"
+            ]
+          }
+        },
+        "abstained": { "type": "boolean" },
+        "details": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

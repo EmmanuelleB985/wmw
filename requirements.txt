@@ -1,0 +1,12 @@
+dataclasses-json>=0.6.0
+jsonschema>=4.20.0
+
+# External dataset download (optional — needed for full pipeline)
+datasets>=2.14.0
+Pillow>=10.0.0
+
+# Testing
+pytest>=7.0.0
+
+# Renderer
+matplotlib

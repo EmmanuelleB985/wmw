@@ -1,0 +1,80 @@
+{
+  "version": "1.0.0",
+  "generation_config": {
+    "num_scenarios": 200,
+    "pairs_per_trace": 16,
+    "balance_labels": true,
+    "seed": 2026
+  },
+  "traces": {
+    "total": 200,
+    "unique_questions": 200,
+    "schema_valid": 181,
+    "noop_pairs_filtered": 0,
+    "by_family": {
+      "friction": 11,
+      "em_induction": 12,
+      "fluid": 14,
+      "circular_motion": 11,
+      "collision": 13,
+      "optics": 10,
+      "wave": 13,
+      "spring": 11,
+      "buoyancy": 13,
+      "inclined_plane": 13,
+      "free_fall": 12,
+      "pulley": 12,
+      "pendulum": 10,
+      "circuit": 12,
+      "projectile": 10,
+      "thermal": 10,
+      "lever": 13
+    },
+    "sha256": "b4d841077b18aa272c2a65a3db7436c9e2beff4151d7984a4a36319e8331810d"
+  },
+  "preference_pairs": {
+    "total": 3200,
+    "noop_filtered": 0,
+    "by_label": {
+      "force": 232,
+      "relation": 304,
+      "object": 437,
+      "state": 437,
+      "transition": 400,
+      "intervention": 400,
+      "temporal": 400,
+      "unit_scale": 295,
+      "faithfulness": 295
+    },
+    "by_family_split": {
+      "seen": 2340,
+      "held_out": 860
+    },
+    "by_field": {
+      "state_0": 2010,
+      "transition": 414,
+      "state_1": 400,
+      "answer": 376
+    },
+    "sha256": "275ba28c48da33df1105cb70f32f8a228a357b6cfdba832cacddcca8640d9cc1"
+  },
+  "splits": {
+    "train_traces": 120,
+    "val_traces": 40,
+    "test_traces": 40,
+    "train_pairs": 1920,
+    "val_pairs": 640,
+    "test_pairs": 640
+  },
+  "perturbation_registry": {
+    "total_perturbations": 25,
+    "seen": 15,
+    "held_out": 10
+  },
+  "diagnostics": {
+    "state_accuracy": 0.905,
+    "transition_accuracy": 1.0,
+    "trace_answer_consistency": 1.0,
+    "abstention_rate": 0.0
+  }
+}
