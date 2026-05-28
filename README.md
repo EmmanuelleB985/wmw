@@ -363,8 +363,6 @@ python -m pytest tests/ -q
 
 Covers generators, all verifier stages, dataset loaders, prompt construction, the trace parser, stress tests, and metrics.
 
-> **Known issue:** four `TestLatexTables` cases in `tests/test_evaluation.py` import `wmw.evaluation.latex_tables`, a module not present in this snapshot (LaTeX-table generation currently lives in `scripts/run_evaluation.py` and `scripts/analysis/build_final_tables.py`). Those four tests error on import; the remaining suite passes. Either point the import at the script-side table builders or restore the module to clear them.
-
 ---
 
 ## Citation
