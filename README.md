@@ -1,5 +1,5 @@
 # WMW — World Models in Words
-[![Paper](http://arxiv.org/abs/2605.29585)]
+**[Paper](http://arxiv.org/abs/2605.29585))**
 
 **Auditing Physical State-Transition Commitments in Vision–Language Models**
 
